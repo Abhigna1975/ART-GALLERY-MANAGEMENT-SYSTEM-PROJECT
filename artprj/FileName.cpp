@@ -122,7 +122,7 @@ int main() {
     do {
         char personType;
         cout << "Enter 'C' for Customer or 'A' for Artist: ";
-        cin >> personType;
+        cin >> personType;  
 
         string fullName, email, phoneNumber, address, style;
 
