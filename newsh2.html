@@ -1,62 +1,404 @@
 ﻿<!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery News - Art Gallery</title>
     <style>
-        img {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.95);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        /* Main Content */
+        .content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem 5rem;
+        }
+
+        /* Art Card Grid */
+        .art-grid {
+            display: grid;
+            gap: 3rem;
+        }
+
+        .art-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeInUp 0.6s ease both;
+        }
+
+        .art-card:nth-child(2) { animation-delay: 0.1s; }
+        .art-card:nth-child(3) { animation-delay: 0.2s; }
+        .art-card:nth-child(4) { animation-delay: 0.3s; }
+        .art-card:nth-child(5) { animation-delay: 0.4s; }
+
+        .art-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .art-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .art-card:hover .art-image {
+            transform: scale(1.05);
+        }
+
+        .art-content {
+            padding: 2.5rem;
+        }
+
+        .art-content h2 {
+            font-size: 2rem;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .art-meta {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .art-content p {
+            color: #555;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .read-more {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .read-more:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-content p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .art-image {
+                height: 300px;
+            }
+
+            .art-content {
+                padding: 1.5rem;
+            }
+
+            .art-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
         }
     </style>
 </head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">ART GALLERY</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="news.html" class="active">News</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
 
-<body style="background-color:mintcream;">
-    
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Gallery News & Features</h1>
+        <p>Discover the stories behind the masterpieces in our collection</p>
+    </div>
 
-    <center>
-        <h1>ART GALLERY</h1>
-        <h2>NEWS PAPER PUBLISHES OF OUR ART GALLERY</h2>
+    <!-- Main Content -->
+    <div class="content">
+        <div class="art-grid">
+            <!-- Starry Night -->
+            <article class="art-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/525px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg" alt="Starry Night" class="art-image">
+                <div class="art-content">
+                    <h2>The Starry Night</h2>
+                    <div class="art-meta">
+                        <span class="meta-item">📅 Painted June 1889</span>
+                        <span class="meta-item">🎨 Vincent van Gogh</span>
+                        <span class="meta-item">📍 MoMA, New York</span>
+                    </div>
+                    <p>The Starry Night is an oil-on-canvas painting by the Dutch Post-Impressionist painter Vincent van Gogh. Painted in June 1889, it depicts the view from the east-facing window of his asylum room at Saint-Rémy-de-Provence, just before sunrise, with the addition of an imaginary village. It has been in the permanent collection of the Museum of Modern Art in New York City since 1941, acquired through the Lillie P. Bliss Bequest. Widely regarded as Van Gogh's magnum opus, The Starry Night is one of the most recognizable paintings in Western art.</p>
+                    <a href="#" class="read-more">Learn More</a>
+                </div>
+            </article>
 
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg/525px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg" alt="Trulli" width="1000" height="444">
-        <h2>STARRY NIGHT</h2>
-    </center>
-    <p>This article is about the 1889 Van Gogh painting. For the similar 1888 Van Gogh painting, see Starry Night Over the Rhône. For the 1850 painting by Jean François Millet, see Starry Night (Millet).</p>
-    <p1>The Starry Night is an oil-on-canvas painting by the Dutch Post-Impressionist painter Vincent van Gogh. Painted in June 1889, it depicts the view from the east-facing window of his asylum room at Saint-Rémy-de-Provence, just before sunrise, with the addition of an imaginary village.It has been in the permanent collection of the Museum of Modern Art in New York City since 1941, acquired through the Lillie P. Bliss Bequest. Widely regarded as Van Gogh's magnum opus, The Starry Night is one of the most recognizable paintings in Western art.</p1>
-    <br>
-    <br>
-    <br>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Starry_Night_Over_the_Rhone.jpg/1280px-Starry_Night_Over_the_Rhone.jpg" alt="Trulli" width="1000" height="444">
+            <!-- Starry Night Over the Rhone -->
+            <article class="art-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Starry_Night_Over_the_Rhone.jpg/1280px-Starry_Night_Over_the_Rhone.jpg" alt="Starry Night Over the Rhone" class="art-image">
+                <div class="art-content">
+                    <h2>Starry Night Over the Rhône</h2>
+                    <div class="art-meta">
+                        <span class="meta-item">📅 September 1888</span>
+                        <span class="meta-item">🎨 Vincent van Gogh</span>
+                        <span class="meta-item">📍 Musée d'Orsay</span>
+                    </div>
+                    <p>Commonly known as Starry Night Over the Rhône, this is one of Vincent van Gogh's paintings of Arles at night. It was painted on the bank of the Rhône that was only a one or two-minute walk from the Yellow House on the Place Lamartine, which van Gogh was renting at the time. The night sky and the effects of light at night provided the subject for some of van Gogh's more famous paintings.</p>
+                    <a href="#" class="read-more">Learn More</a>
+                </div>
+            </article>
 
-    <center><h2>STARRY NIGHT OVER THE RHONE</h2></center>
-    <p>tarry Night [1] (September 1888, French: La Nuit étoilée), commonly known as Starry Night Over the Rhône, is one of Vincent van Gogh's paintings of Arles at night. It was painted on the bank of the Rhône that was only a one or two-minute walk from the Yellow House on the Place Lamartine, which van Gogh was renting at the time. The night sky and the effects of light at night provided the subject for some of van Gogh's more famous paintings, including Café Terrace at Night (painted earlier the same month) and the June, 1889, canvas from Saint-Remy, The Starry Night.</p>
+            <!-- The Church at Auvers -->
+            <article class="art-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Vincent_van_Gogh_-_The_Church_in_Auvers-sur-Oise%2C_View_from_the_Chevet_-_Google_Art_Project.jpg/800px-Vincent_van_Gogh_-_The_Church_in_Auvers-sur-Oise%2C_View_from_the_Chevet_-_Google_Art_Project.jpg" alt="The Church at Auvers" class="art-image">
+                <div class="art-content">
+                    <h2>The Church at Auvers</h2>
+                    <div class="art-meta">
+                        <span class="meta-item">📅 June 1890</span>
+                        <span class="meta-item">🎨 Vincent van Gogh</span>
+                        <span class="meta-item">📍 Musée d'Orsay, Paris</span>
+                    </div>
+                    <p>The Church at Auvers is an oil painting created by Dutch post-impressionist artist Vincent van Gogh in June 1890 which now hangs in the Musée d'Orsay in Paris, France. The actual church is in Place de l'Eglise, Auvers-sur-Oise, France, 27 kilometres (17 mi) north-west of Paris.</p>
+                    <a href="#" class="read-more">Learn More</a>
+                </div>
+            </article>
 
-    <br>
-    <br>
-    <br>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Vincent_van_Gogh_-_The_Church_in_Auvers-sur-Oise%2C_View_from_the_Chevet_-_Google_Art_Project.jpg/800px-Vincent_van_Gogh_-_The_Church_in_Auvers-sur-Oise%2C_View_from_the_Chevet_-_Google_Art_Project.jpg" alt="Trulli" width="1000" height="444">
-    <center><h2>The Church at Auvers</h2></center>
-    <p>
-        The Church at Auvers is an oil painting created by Dutch post-impressionist artist Vincent van Gogh in June 1890 which now hangs in the Musée d'Orsay in Paris, France.
+            <!-- Olive Trees -->
+            <article class="art-card">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Van_Gogh_The_Olive_Trees..jpg/1024px-Van_Gogh_The_Olive_Trees..jpg" alt="Olive Trees" class="art-image">
+                <div class="art-content">
+                    <h2>Olive Trees</h2>
+                    <div class="art-meta">
+                        <span class="meta-item">📅 1889</span>
+                        <span class="meta-item">🎨 Vincent van Gogh</span>
+                        <span class="meta-item">📍 Various Collections</span>
+                    </div>
+                    <p>Vincent van Gogh painted at least 15 paintings of olive trees, mostly in Saint-Rémy-de-Provence in 1889. At his own request, he lived at an asylum there from May 1889 through May 1890 painting the gardens of the asylum and, when he had permission to venture outside its walls, nearby olive trees, cypresses and wheat fields.</p>
+                    <a href="#" class="read-more">Learn More</a>
+                </div>
+            </article>
 
-        The actual church is in Place de l'Eglise, Auvers-sur-Oise, France, 27 kilometres (17 mi) north-west of Paris.
-    </p>
+            <!-- Café Terrace at Night -->
+            <article class="art-card">
+                <img src="https://www.vincentvangogh.org/assets/img/paintings/cafe-terrace-at-night.jpg" alt="Café Terrace at Night" class="art-image">
+                <div class="art-content">
+                    <h2>Café Terrace at Night</h2>
+                    <div class="art-meta">
+                        <span class="meta-item">📅 1888</span>
+                        <span class="meta-item">🎨 Vincent van Gogh</span>
+                        <span class="meta-item">📍 Kröller-Müller Museum</span>
+                    </div>
+                    <p>This painting of a colorful outdoor view is a picturesque work, the vision of a relaxed spectator who enjoys the charm of his surrounding without any moral concern. It recalls Van Gogh's mood when he wrote that "the night is more alive and more richly colored than the day." The color is more profuse and the eye wanders along the steeped or dove-tailed edges of neighboring areas, creating a dynamic composition that draws the viewer into the vibrant night scene.</p>
+                    <a href="#" class="read-more">Learn More</a>
+                </div>
+            </article>
+        </div>
+    </div>
 
-    <br>
-    <br>
-    <br>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Van_Gogh_The_Olive_Trees..jpg/1024px-Van_Gogh_The_Olive_Trees..jpg" alt="Trulli" width="1000" height="555">
-    <center><h2>Olive Trees </h2></center>
-    <p2>Vicent van Gogh painted at least 15 paintings of olive trees, mostly in Saint-Rémy-de-Provence in 1889. At his own request, he lived at an asylum there from May 1889 through May 1890 painting the gardens of the asylum and, when he had permission to venture outside its walls, nearby olive trees, cypresses and wheat fields.</p2>
-
-    <br>
-    <br>
-    <br>
-    <img src="https://www.vincentvangogh.org/assets/img/paintings/cafe-terrace-at-night.jpg" alt="Trulli" width="1000" height="444">
-    <center><h2>Café Terrace at Night</h2></center>
-    <p>Café Terrace at Night, 1888 by Vincent Van Gogh.This painting of a colorful outdoor view is a picturesque work, the vision of a relaxed spectator who enjoys the charm of his surrounding without any moral concern. It recalls Van Gogh's mood when he wrote that "the night is more alive and more richly colored than the day." The color is more profuse and the eye wanders along the steeped or dove-tailed edges of neighboring areas - irregular shapes fitted to each other like a jigsaw puzzle design. To divide this space for long into a large object and background themes is difficult for the eyes; the distant and nearer parts are alike distinct. The yellow of the cafe plays against the blue-black of the remote street and the violet-blue of the foreground door, and, by a paradox of composition that helps to unify the work, at the strongest point of contrast the awning's blunt corner nearest to us touches the remote blue sky. Foreshortened lines that thrust into depth, like the lintel of the door, are strictly parallel to lines like the slope of the yellow awning and the roof of the house above, which lie in planes perpendicular to the first. For this roving, unengaged vision the upward dimension is no less important and expressive than the depth.</p>
-
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Art Gallery. All rights reserved.</p>
+            <p>5151 Park Ave, Fairfield, CT 06825 | +1 2033717999</p>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook">f</a>
+                <a href="#" aria-label="Twitter">𝕏</a>
+                <a href="#" aria-label="Instagram">📷</a>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
-

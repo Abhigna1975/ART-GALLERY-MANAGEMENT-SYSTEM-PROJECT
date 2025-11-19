@@ -1,0 +1,24 @@
+{
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "live-server"
+  },
+  "name": "art-gallery-management-system-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Abhigna1975/ART-GALLERY-MANAGEMENT-SYSTEM-PROJECT/issues"
+  },
+  "homepage": "https://github.com/Abhigna1975/ART-GALLERY-MANAGEMENT-SYSTEM-PROJECT#readme",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Abhigna1975/ART-GALLERY-MANAGEMENT-SYSTEM-PROJECT.git"
+  }
+}

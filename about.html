@@ -1,0 +1,544 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Art Gallery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="none"/><circle cx="50" cy="50" r="40" stroke="rgba(255,255,255,0.1)" stroke-width="2" fill="none"/></svg>');
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .hero h2 {
+            font-size: 1.8rem;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 2rem;
+            font-weight: 400;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .quote-box {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .quote-box p {
+            color: white;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .quote-author {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        /* Story Section */
+        .story-section {
+            max-width: 1200px;
+            margin: 5rem auto;
+            padding: 0 2rem;
+        }
+
+        .story-content {
+            background: white;
+            padding: 4rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            line-height: 1.9;
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        .story-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .story-content p:first-of-type::first-letter {
+            font-size: 4rem;
+            font-weight: 700;
+            float: left;
+            line-height: 1;
+            margin: 0 0.1em 0 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Team Section */
+        .team-section {
+            background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 5rem 2rem;
+        }
+
+        .team-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .team-header h2 {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .team-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+        }
+
+        .team-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeInUp 0.6s ease both;
+        }
+
+        .team-card:nth-child(2) { animation-delay: 0.1s; }
+        .team-card:nth-child(3) { animation-delay: 0.2s; }
+
+        .team-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .team-image-wrapper {
+            position: relative;
+            overflow: hidden;
+            height: 350px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .team-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+            mix-blend-mode: luminosity;
+            opacity: 0.9;
+        }
+
+        .team-card:hover .team-image {
+            transform: scale(1.1);
+            mix-blend-mode: normal;
+            opacity: 1;
+        }
+
+        .team-content {
+            padding: 2.5rem;
+        }
+
+        .team-content h3 {
+            font-size: 1.8rem;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-title {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .team-bio {
+            color: #666;
+            line-height: 1.7;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            max-height: 200px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .team-bio::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .team-bio::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .team-bio::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+        }
+
+        .team-contact {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-top: 1.5rem;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .contact-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: #764ba2;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: 0;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-content p {
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero h2 {
+                font-size: 1.3rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .story-content {
+                padding: 2rem;
+            }
+
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quote-box {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">ART GALLERY</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>ART GALLERY</h1>
+            <h2>About Us</h2>
+            <div class="quote-box">
+                <p>"People see owning a gallery as a way to get rich. I never thought that I could get rich in the art world. I wanted a life in art. I wanted to live with artists. I wanted to make beautiful shows."</p>
+                <p class="quote-author">— Arne Glimcher, Gallery Owner</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section class="story-section">
+        <div class="story-content">
+            <p>Arne Glimcher and I have a lot in common. We both understand that the art world is often perceived as a mysterious place, a distant universe, or a way to get rich. It has also been considered by many to be an exclusive and elitist society. However, with the innovation of technology, the internet, and the growth of international art fairs, much progress has been made in demystifying this wonderful and creative world and introducing its many players, including artists, museums, cultural institutions, media, curators, fairs, auction houses, and of course, art galleries.</p>
+
+            <p>I have owned and directed my art gallery for 22 years. My position has provided me with a wealth of experience and professional insights to be able to explain the important role and purpose of a gallery within the art world. This article is dedicated to all those who told me and continue to say, "Your job is so wonderful. You make so much money promoting beautiful art to beautiful people." This is a wonderful perception - but there is so much more to the reality.</p>
+
+            <p>I opened my art gallery after years of living and working in the world of art. I majored in Art History at Middlebury College in Vermont and began my career working at the Gold Museum in Bogota, Colombia. My career led me to formative positions in the same city, working with the Art Department at the Bank of the Republic, and the Museum of Modern Art, in the museology, curatorial and editorial departments, respectively. Breaking with tradition, I forged a path with a partner and launched an art consulting office in the late 80s and early 90s. It was a new concept in Colombia. In 2000, I went out on my own and opened Beatriz Esguerra Art.</p>
+
+            <p>The primary purpose of an art gallery is to nurture visual artists, promote their work, and expose them to the public, collectors, media, and cultural institutions. Furthermore, the gallery works tirelessly and strategically to advance the artists' careers and establish them in the professional art world both locally and globally. To achieve this vast mission, a gallery must provide appropriate exhibition space, manage administrative and curatorial staff, provide insurance, secure advertising, invest and participate in a myriad of very expensive art fairs, develop and set up websites, pay for subscriptions, and produce timely and well-attended events.</p>
+
+            <p>Each gallery represents and promotes a group of artists that, in general terms, follows a specific line and style; this makes each art gallery unique. For example, some galleries represent emerging artists, and others promote specific art genres such as abstract or contemporary art, art on paper, or the masters of the 20th century. Mistakenly, many think that any artist fits in any gallery without considering the vision, mission, and style promoted by the specific gallery.</p>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="team-header">
+            <h2>Our Team</h2>
+            <p>Meet the passionate individuals behind our gallery</p>
+        </div>
+
+        <div class="team-grid">
+            <!-- Team Member 1 -->
+            <article class="team-card">
+                <div class="team-image-wrapper">
+                    <img src="Alex.png" alt="Jenny Saville" class="team-image">
+                </div>
+                <div class="team-content">
+                    <h3>Alex Saville</h3>
+                    <span class="team-title">CEO & Founder</span>
+                    <p class="team-bio">
+                        "Human perception of the body is so acute and knowledgeable that the smallest hint of a body can trigger recognition." In her depictions of the human form, Jenny Saville transcends the boundaries of both classical figuration and modern abstraction. Oil paint, applied in heavy layers, becomes as visceral as flesh itself, each painted mark maintaining a supple, mobile life of its own.
+                        <br><br>
+                        Born in 1970 in Cambridge, England, Saville attended the Glasgow School of Art from 1988 to 1992. Her studies focused her interest in "imperfections" of flesh, with all of its societal implications and taboos. She has spoken of seeing the work of Titian and Tintoretto on trips with her uncle, and of observing the way that her piano teacher's two breasts became one large mass.
+                    </p>
+                    <div class="team-contact">
+                        <div class="contact-icon">✉</div>
+                        <a href="mailto:jane@gmail.com" class="contact-link">jane@gmail.com</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Team Member 2 -->
+            <article class="team-card">
+                <div class="team-image-wrapper">
+                    <img src="mars.png" alt="Mark Bradford" class="team-image">
+                </div>
+                <div class="team-content">
+                    <h3>Mars Ford</h3>
+                    <span class="team-title">Art Director</span>
+                    <p class="team-bio">
+                        Mark Bradford (b. 1961 in Los Angeles) is a contemporary artist best known for his large-scale abstract paintings created out of paper. Characterized by its layered formal, material, and conceptual complexity, Bradford's work explores social and political structures that objectify marginalized communities and the bodies of vulnerable populations.
+                        <br><br>
+                        Drawing from the diverse cultural and geographic makeup of his southern Californian community, Bradford's work is as informed by his personal background as a third-generation merchant there as it is by the tradition of abstract painting. Mark Bradford has received many awards, including the Bucksbaum Award (2006), the Louis Comfort Tiffany Foundation Award (2003), and the Joan Mitchell Foundation Award (2002).
+                    </p>
+                    <div class="team-contact">
+                        <div class="contact-icon">✉</div>
+                        <a href="mailto:mark@artmail.com" class="contact-link">mark@artmail.com</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Team Member 3 -->
+            <article class="team-card">
+                <div class="team-image-wrapper">
+                    <img src="Roberto.png" alt="Edward Ruscha" class="team-image">
+                </div>
+                <div class="team-content">
+                    <h3>Edward Roberto</h3>
+                    <span class="team-title">Designer</span>
+                    <p class="team-bio">
+                        "I just happened to paint words like someone else paints flowers." Once, when asked about the abundance of text in his work, Ed Ruscha explained his unique approach to art. Indeed, language remains the artist's most consistent subject, one whose form and meaning he has continuously explored over more than six decades.
+                        <br><br>
+                        In 1961, one year after completing his studies at the Chouinard Art Institute (now CalArts) in Los Angeles, Ruscha spent several months traveling through Europe. Over the years, Ruscha fell in with the artists orbiting the Ferus Gallery, which became the ground zero of Los Angeles art, hosting exhibitions by a diverse roster of talents.
+                    </p>
+                    <div class="team-contact">
+                        <div class="contact-icon">✉</div>
+                        <a href="mailto:edward@artmail.com" class="contact-link">edward@artmail.com</a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Art Gallery. All rights reserved.</p>
+            <p>5151 Park Ave, Fairfield, CT 06825 | +1 2033717999</p>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook">f</a>
+                <a href="#" aria-label="Twitter">𝕏</a>
+                <a href="#" aria-label="Instagram">📷</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
